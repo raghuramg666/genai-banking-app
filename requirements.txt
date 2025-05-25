@@ -3,3 +3,5 @@ pydantic
 uvicorn
 python-dotenv
 pandas
+streamlit
+requests

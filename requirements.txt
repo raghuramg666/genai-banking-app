@@ -5,3 +5,11 @@ python-dotenv
 pandas
 streamlit
 requests
+openai
+scikit-learn
+faiss-cpu
+transformers
+langchain
+sentence-transformers
+pdfplumber
+python-multipart

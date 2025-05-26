@@ -1,7 +1,8 @@
 import streamlit as st
 import requests
 
-BACKEND_URL = "https://genai-banking-app-floral-brook-4494.fly.dev"
+# Point to your local FastAPI backend
+BACKEND_URL = "http://127.0.0.1:8000"
 
 st.title("💼 GenAI Banking Compliance & Risk Assistant")
 

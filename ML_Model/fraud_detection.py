@@ -1,47 +1,64 @@
+"""
+ML_Model/fraud_detection.py
+Train a Random-Forest fraud classifier, log metrics to MLflow,
+and save the trained scikit-learn pipeline as ../model.pkl
+"""
 
-import pandas as pd
 from pathlib import Path
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.pipeline import make_pipeline
-from sklearn.compose import ColumnTransformer
 import joblib
+import mlflow
+import pandas as pd
+from sklearn.compose import ColumnTransformer
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import OneHotEncoder
 
-# Get the base directory of the project
-BASE_DIR = Path(__file__).resolve().parent.parent
+# ───────────────────────── Paths ─────────────────────────
+THIS_FILE = Path(__file__).resolve()
+PROJECT_ROOT = THIS_FILE.parents[1]         # one level up from ML_Model/
+DATA_PATH = PROJECT_ROOT / "Dataset" / "transactions.csv"
+MODEL_PATH = PROJECT_ROOT / "model.pkl"
 
-# Define the path to the CSV
-DATA_PATH = BASE_DIR/"Dataset"/"transactions.csv"
-print(DATA_PATH)
-# Load the data
+# ───────────────────────── MLflow ────────────────────────
+mlflow.set_tracking_uri("http://localhost:5001")
+mlflow.set_experiment("fraud_risk")
+
+# ───────────────────────── Data ──────────────────────────
 df = pd.read_csv(DATA_PATH)
 
-
-
-
-# Features & target
 X = df[["amount", "txn_type", "location", "device_type"]]
 y = df["is_fraud"]
 
-# Preprocessing
 categorical = ["txn_type", "location", "device_type"]
 numeric = ["amount"]
 
-preprocessor = ColumnTransformer(
-    transformers=[
-        ("cat", OneHotEncoder(handle_unknown="ignore"), categorical),
-        ("num", "passthrough", numeric)
-    ]
+preprocess = ColumnTransformer(
+    [("cat", OneHotEncoder(handle_unknown="ignore"), categorical),
+     ("num", "passthrough", numeric)]
 )
 
-# Model pipeline
-model = make_pipeline(preprocessor, RandomForestClassifier(n_estimators=100, random_state=42))
+model = make_pipeline(
+    preprocess,
+    RandomForestClassifier(n_estimators=200, n_jobs=-1, random_state=42)
+)
 
-# Train
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-model.fit(X_train, y_train)
+# ───────────────────────── Train ─────────────────────────
+X_tr, X_te, y_tr, y_te = train_test_split(
+    X, y, test_size=0.20, stratify=y, random_state=42
+)
+model.fit(X_tr, y_tr)
+acc = accuracy_score(y_te, model.predict(X_te))
 
-# Save model
-joblib.dump(model, "model.pkl")
-print("✅ model.pkl saved.")
+# ──────────────────────── Logging ────────────────────────
+with mlflow.start_run() as run:
+    mlflow.log_param("model_type", "RandomForestClassifier")
+    mlflow.log_param("n_estimators", 200)
+    mlflow.log_metric("accuracy", acc)
+    mlflow.sklearn.log_model(model, artifact_path="model")
+    print(f"✔ MLflow run logged → {run.info.run_id}")
+
+# ─────────────────────── Persist ─────────────────────────
+joblib.dump(model, MODEL_PATH)          # ✅ this both writes the file and returns its path
+print(f"✅ Saved model pipeline to: {MODEL_PATH}")

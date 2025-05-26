@@ -7,3 +7,8 @@ class Transaction(BaseModel):
     location: str
     device_type: str
     timestamp: str
+class TxnFeatures(BaseModel):
+    amount: float
+    txn_type: str
+    location: str
+    device_type: str

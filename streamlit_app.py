@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-BACKEND_URL = "https://a1c9ee41-1a1c-4745-854b-94f815949a91-00-3ull08k6757g7.spock.replit.dev"
+BACKEND_URL = "https://genai-banking-app-floral-brook-4494.fly.dev"
 
 st.title("💼 GenAI Banking Compliance & Risk Assistant")
 

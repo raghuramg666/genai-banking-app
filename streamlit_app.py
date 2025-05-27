@@ -4,10 +4,10 @@ import requests
 # Point to your local FastAPI backend
 BACKEND_URL = "http://127.0.0.1:8000"
 
-st.title("💼 GenAI Banking Compliance & Risk Assistant")
+st.title(" GenAI Banking Compliance & Risk Assistant")
 
-# 🚨 Transaction Risk Scoring
-st.header("🚨 Transaction Risk Scoring")
+# Transaction Risk Scoring
+st.header("Transaction Risk Scoring")
 with st.form("txn_form"):
     user_id = st.text_input("User ID", "user001")
     amount = st.number_input("Transaction Amount", value=5000.0)
@@ -29,14 +29,14 @@ with st.form("txn_form"):
         try:
             res = requests.post(f"{BACKEND_URL}/txn", json=payload)
             if res.status_code == 200:
-                st.success(f"✔ Risk Score: {res.json()['score']} — {res.json()['reason']}")
+                st.success(f" Risk Score: {res.json()['score']} — {res.json()['reason']}")
             else:
-                st.error(f"❌ Error: {res.status_code}")
+                st.error(f" Error: {res.status_code}")
         except Exception as e:
             st.error(f"Exception: {e}")
 
-# 📄 Compliance Q&A
-st.header("📄 Compliance Assistant")
+#  Compliance Q&A
+st.header(" Compliance Assistant")
 question = st.text_input("Ask a compliance-related question (e.g., AML, KYC rules)")
 if st.button("Get Answer"):
     try:
@@ -44,12 +44,12 @@ if st.button("Get Answer"):
         if res.status_code == 200:
             st.success(res.json()["answer"])
         else:
-            st.error(f"❌ Error: {res.status_code}")
+            st.error(f" Error: {res.status_code}")
     except Exception as e:
         st.error(f"Exception: {e}")
 
-# 📤 Upload PDF
-st.header("📤 Upload Compliance PDF")
+#  Upload PDF
+st.header(" Upload Compliance PDF")
 uploaded_file = st.file_uploader("Upload new policy PDF", type=["pdf"])
 
 if uploaded_file is not None:
@@ -59,6 +59,6 @@ if uploaded_file is not None:
         if res.status_code == 200:
             st.success(res.json()["message"])
         else:
-            st.error(f"❌ Upload failed: {res.status_code}")
+            st.error(f" Upload failed: {res.status_code}")
     except Exception as e:
         st.error(f"Exception during upload: {e}")

@@ -5,6 +5,7 @@ python-dotenv
 pandas
 optuna
 mlflow
+gradio
 streamlit
 requests
 openai

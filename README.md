@@ -22,7 +22,7 @@ A production-grade, zero-cost regulatory tech project built with **FastAPI**, **
 |----------------|---------------------------------------------------------|
 | Backend        | FastAPI, Uvicorn                                        |
 | Frontend       | Streamlit                                               |
-| ML & Explain   | Scikit-learn, SHAP, Optuna (planned), MLflow            |
+| ML & Explain   | Scikit-Learn, SHAP, Optuna (planned), MLflow            |
 | GenAI & RAG    | FAISS, SentenceTransformers, pdfplumber, Groq API       |
 | Observability  | Prometheus, Grafana, prometheus-fastapi-instrumentator |
 | Orchestration  | Docker, Docker Compose                                  |

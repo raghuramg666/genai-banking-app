@@ -7,7 +7,7 @@ A production-grade, zero-cost regulatory tech project built with **FastAPI**, **
 ## Key Highlights
 
 - Real-time fraud risk scoring using ML model (RandomForest)
-- SHAP-based explainability (`/fraud_explain`)
+- SHAP - based explainability (`/fraud_explain`)
 - Compliance Q&A over uploaded policy PDFs (RAG using FAISS + Groq)
 - Upload support for new documents via Streamlit + FastAPI
 - Prometheus + Grafana observability dashboard

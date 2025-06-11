@@ -1,3 +1,9 @@
+![image](https://github.com/user-attachments/assets/0c49f9d0-d4d5-4560-8769-7896642d678f)
+![image](https://github.com/user-attachments/assets/cc89d691-3d57-429f-a6a3-2eca55e79965)
+![image](https://github.com/user-attachments/assets/2363bcde-d68a-4313-82b6-e675f50c9164)
+
+
+
 # GenAI Banking Compliance & Risk Assistant
 
 A production-grade, zero-cost regulatory tech project built with **FastAPI**, **Gradio**, **MLflow**, **FAISS**, **Groq LLM**, **SHAP**, **Docker Compose**, and **Grafana** demonstrating deep skills across **machine learning, retrieval-augmented generation, MLOps, and observability**.
